@@ -1,22 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:miniplayer/miniplayer.dart';
+import 'package:youtube/model/data.dart';
 import 'home_screen.dart';
-class NavScreen extends StatefulWidget {
+import 'package:youtube/screens/video_screen.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
+final selectedVideoProvider = StateProvider<Video?>((ref) => null);
+
+final miniPlayerControllerProvider =
+    StateProvider.autoDispose<MiniplayerController>(
+  (ref) => MiniplayerController(),
+);
+
+class NavScreen extends ConsumerStatefulWidget {
   const NavScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _NavScreenState createState() => _NavScreenState();
 }
 
-class _NavScreenState extends State<NavScreen> {
+class _NavScreenState extends ConsumerState<NavScreen> {
   int _selectedIndex = 0;
+  static const double _playerMinHeight = 60.0;
 
   final List<Widget> _screens = [
-    HomeScreen (),
-    const Scaffold(body: Center(child: Text ( 'Explore'))),
-    const Scaffold(body: Center(child: Text( 'Add'))),
-    const Scaffold(body: Center(child: Text( 'Subscriptions'))),
-    const Scaffold(body: Center(child: Text( 'Library'))),
+    HomeScreen(),
+    const Scaffold(body: Center(child: Text('Explore'))),
+    const Scaffold(body: Center(child: Text('Add'))),
+    const Scaffold(body: Center(child: Text('Subscriptions'))),
+    const Scaffold(body: Center(child: Text('Library'))),
   ];
 
   void _onItemTapped(int index) {
@@ -27,69 +40,155 @@ class _NavScreenState extends State<NavScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final selectedVideo = ref.watch(selectedVideoProvider);
+    final miniPlayerController = ref.watch(miniPlayerControllerProvider);
+
     return Scaffold(
       body: Stack(
-        children: _screens.asMap().entries.map((entry) {
-          int idx = entry.key;
-          Widget screen = entry.value;
-          return Offstage(
-            offstage: _selectedIndex != idx,
-            child: screen,
-          );
-        }).toList(),
-      ),
-  bottomNavigationBar: BottomNavigationBar(
-  currentIndex: _selectedIndex,
-  onTap: _onItemTapped,
-  type: BottomNavigationBarType.fixed,
-  selectedItemColor: Colors.white, // Active icon color
-  unselectedItemColor: Colors.white, // Dark gray for inactive icons
-  showSelectedLabels: true,
-  showUnselectedLabels: true,
-  selectedLabelStyle: TextStyle(fontSize: 12), // Adjusted for space
-  unselectedLabelStyle: TextStyle(fontSize: 12), // Match selected label size
-  backgroundColor: Colors.black,
-  items: <BottomNavigationBarItem>[
-    const BottomNavigationBarItem(
-      icon: Icon(Icons.home_outlined),
-      activeIcon: Icon(Icons.home),
-      label: 'Home',
-    ),
-    const BottomNavigationBarItem(
-      icon: Icon(Icons.play_circle_outline),
-      activeIcon: Icon(Icons.play_circle_filled),
-      label: 'Shorts',
-    ),
-    BottomNavigationBarItem(
-      icon: SizedBox(
-        height: 24, // Ensures alignment with other icons
-        child: Align(
-          alignment: Alignment.center,
-          child:  Container(
-            width: 36, // Circular effect
-            height: 36,
-            decoration: BoxDecoration(
-               color: Colors.grey[800], // Dark grey circle
-              shape: BoxShape.circle,
+        children: [
+          ..._screens.asMap().entries.map((entry) {
+            int idx = entry.key;
+            Widget screen = entry.value;
+            return Offstage(
+              offstage: _selectedIndex != idx,
+              child: screen,
+            );
+          }).toList(),
+          if (selectedVideo != null)
+            Miniplayer(
+              controller: miniPlayerController,
+              minHeight: _playerMinHeight,
+              maxHeight: MediaQuery.of(context).size.height,
+              builder: (height, percentage) {
+                if (height <= _playerMinHeight + 4.0) {
+                  return Container(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Image.network(
+                              selectedVideo.thumbnailUrl ?? '',
+                              height: _playerMinHeight - 4.0,
+                              width: 120.0,
+                              fit: BoxFit.cover,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Flexible(
+                                      child: Text(
+                                        selectedVideo.title ?? '',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall!
+                                            .copyWith(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: Text(
+                                        selectedVideo.author.username ?? '',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall!
+                                            .copyWith(
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.play_arrow),
+                              onPressed: () {},
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.close),
+                              onPressed: () {
+                                ref.read(selectedVideoProvider.notifier).state = null;
+                              },
+                            ),
+                          ],
+                        ),
+                        const LinearProgressIndicator(
+                          value: 0.4,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.red,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  return VideoScreen();
+                }
+              },
             ),
-            child: Icon(Icons.add, color: Colors.white, size: 24), // Default icon size
-          ),
-        ),
+        ],
       ),
-      label: 'Add', // Keep space consistent
-    ),
-    const BottomNavigationBarItem(
-      icon: Icon(Icons.video_library_outlined),
-      activeIcon: Icon(Icons.video_library),
-      label: 'Subscriptions', // Ensure full text appears
-    ),
-    const BottomNavigationBarItem(
-      icon: Icon(Icons.person_outline),
-      activeIcon: Icon(Icons.person),
-      label: 'Profile',
-    ),
-  ],
-),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        selectedLabelStyle: TextStyle(fontSize: 12),
+        unselectedLabelStyle: TextStyle(fontSize: 12),
+        backgroundColor: Colors.black,
+        items: <BottomNavigationBarItem>[
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            activeIcon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.play_circle_outline),
+            activeIcon: Icon(Icons.play_circle_filled),
+            label: 'Shorts',
+          ),
+          BottomNavigationBarItem(
+            icon: SizedBox(
+              height: 24,
+              child: Align(
+                alignment: Alignment.center,
+                child: Container(
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[800],
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(Icons.add, color: Colors.white, size: 24),
+                ),
+              ),
+            ),
+            label: 'Add',
+          ),
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.video_library_outlined),
+            activeIcon: Icon(Icons.video_library),
+            label: 'Subscriptions',
+          ),
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            activeIcon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+      ),
     );
   }
 }

@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter YouTube UI',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
+      theme: ThemeData(      
         brightness: Brightness.dark,
         bottomNavigationBarTheme:
             const BottomNavigationBarThemeData(selectedItemColor: Colors.white),

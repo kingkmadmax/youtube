@@ -13,7 +13,7 @@ class _NavScreenState extends State<NavScreen> {
 
   final List<Widget> _screens = [
     HomeScreen (),
-    const Scaffold(body: Center(child: Text ( 'shorts'))),
+    const Scaffold(body: Center(child: Text ( 'Explore'))),
     const Scaffold(body: Center(child: Text( 'Add'))),
     const Scaffold(body: Center(child: Text( 'Subscriptions'))),
     const Scaffold(body: Center(child: Text( 'Library'))),
@@ -24,12 +24,21 @@ class _NavScreenState extends State<NavScreen> {
       _selectedIndex = index;
     });
   }
-  
-@override
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
+      body: Stack(
+        children: _screens.asMap().entries.map((entry) {
+          int idx = entry.key;
+          Widget screen = entry.value;
+          return Offstage(
+            offstage: _selectedIndex != idx,
+            child: screen,
+          );
+        }).toList(),
+      ),
+  bottomNavigationBar: BottomNavigationBar(
   currentIndex: _selectedIndex,
   onTap: _onItemTapped,
   type: BottomNavigationBarType.fixed,

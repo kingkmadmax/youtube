@@ -13,7 +13,7 @@ class _NavScreenState extends State<NavScreen> {
 
   final List<Widget> _screens = [
     HomeScreen (),
-    const Scaffold(body: Center(child: Text ( 'Explore'))),
+    const Scaffold(body: Center(child: Text ( 'shorts'))),
     const Scaffold(body: Center(child: Text( 'Add'))),
     const Scaffold(body: Center(child: Text( 'Subscriptions'))),
     const Scaffold(body: Center(child: Text( 'Library'))),

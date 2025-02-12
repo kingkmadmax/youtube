@@ -4,6 +4,7 @@ import 'package:youtube/model/data.dart';
 import 'package:youtube/providers/video_provider.dart';
 import 'package:miniplayer/miniplayer.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:intl/intl.dart';
 
 class VideoCard extends ConsumerWidget {
   final Video video;
@@ -16,6 +17,36 @@ class VideoCard extends ConsumerWidget {
     this.hasPadding = false,
     this.onTap,
   }) : super(key: key);
+
+  String _formatViews(String viewCount) {
+    final int views = int.tryParse(viewCount) ?? 0;
+    if (views >= 1000000) {
+      return '${(views / 1000000).toStringAsFixed(1)}M views';
+    } else if (views >= 1000) {
+      return '${(views / 1000).toStringAsFixed(1)}K views';
+    } else {
+      return '$views views';
+    }
+  }
+  
+  String _formatDuration(String duration) {
+    final regex = RegExp(r'PT(\d+H)?(\d+M)?(\d+S)?');
+    final match = regex.firstMatch(duration);
+
+    if (match == null) return duration;
+
+    final hours = match.group(1)?.replaceAll('H', '') ?? '0';
+    final minutes = match.group(2)?.replaceAll('M', '') ?? '0';
+    final seconds = match.group(3)?.replaceAll('S', '') ?? '0';
+
+    final formattedDuration = [
+      if (int.parse(hours) > 0) hours.padLeft(2, '0'),
+      minutes.padLeft(2, '0'),
+      seconds.padLeft(2, '0')
+    ].join(':');
+
+    return formattedDuration;
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -53,7 +84,7 @@ class VideoCard extends ConsumerWidget {
                   padding: const EdgeInsets.all(4.0),
                   color: Colors.black,
                   child: Text(
-                    video.duration ?? '',
+                    _formatDuration(video.duration ?? ''),
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge!
@@ -94,7 +125,7 @@ class VideoCard extends ConsumerWidget {
                       ),
                       Flexible(
                         child: Text(
-                          '${video.author.username ?? ''} • ${video.viewCount ?? ''} views • ${timeago.format(video.timestamp)}',
+                          '${video.author.username} • ${_formatViews(video.viewCount)} • ${timeago.format(video.timestamp)}',
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context)

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-
 import 'package:youtube/model/data.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class VideoInfo extends StatelessWidget {
   final Video video;
@@ -25,7 +24,7 @@ class VideoInfo extends StatelessWidget {
           ),
           const SizedBox(height: 8.0),
           Text(
-            '${video.viewCount} views ',
+              '${video.viewCount} views • ${timeago.format(video.timestamp)}',
             style:
                 Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14.0),
           ),

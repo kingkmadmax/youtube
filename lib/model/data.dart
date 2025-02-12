@@ -11,7 +11,7 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      username: json['snippet']['channelTitle'] ?? 'Unknown',
+      username: json['snippet']?['channelTitle'] ?? 'Unknown',
       profileImageUrl: '', // YouTube API does not provide profile image URL directly
       subscribers: '', // YouTube API does not provide subscriber count directly
     );
@@ -25,6 +25,20 @@ const User currentUser = User(
   subscribers: '100K',
 );
 
+class Category {
+  final String id;
+  final String title;
+
+  Category({required this.id, required this.title});
+
+  factory Category.fromJson(Map<String, dynamic> json) {
+    return Category(
+      id: json['id'] as String,
+      title: json['snippet']['title'] as String,
+    );
+  }
+}
+
 class Video {
   final String id;
   final User author;
@@ -35,6 +49,7 @@ class Video {
   final String viewCount;
   final String likes;
   final String dislikes;
+  final String categoryId;
 
   const Video({
     required this.id,
@@ -46,6 +61,7 @@ class Video {
     required this.viewCount,
     required this.likes,
     required this.dislikes,
+    required this.categoryId,
   });
 
   factory Video.fromJson(Map<String, dynamic> json) {
@@ -53,13 +69,14 @@ class Video {
     return Video(
       id: id ?? '',
       author: User.fromJson(json),
-      title: json['snippet']['title'] ?? 'No Title',
-      thumbnailUrl: json['snippet']['thumbnails']['high']['url'] ?? '',
+      title: json['snippet']?['title'] ?? 'No Title',
+      thumbnailUrl: json['snippet']?['thumbnails']?['high']?['url'] ?? '',
       duration: json['contentDetails']?['duration'] ?? '0:00',
-      timestamp: DateTime.parse(json['snippet']['publishedAt'] ?? DateTime.now().toIso8601String()),
+      timestamp: DateTime.parse(json['snippet']?['publishedAt'] ?? DateTime.now().toIso8601String()),
       viewCount: json['statistics']?['viewCount'] ?? '0',
       likes: json['statistics']?['likeCount'] ?? '0',
       dislikes: json['statistics']?['dislikeCount'] ?? '0',
+      categoryId: json['snippet']?['categoryId'] ?? '',
     );
   }
 }
@@ -75,6 +92,7 @@ final List<Video> videos = [
     viewCount: '10K',
     likes: '958',
     dislikes: '4',
+    categoryId: '',
   ),
   Video(
     author: currentUser,
@@ -87,6 +105,7 @@ final List<Video> videos = [
     viewCount: '8K',
     likes: '485',
     dislikes: '8',
+    categoryId: '',
   ),
   Video(
     id: 'ilX5hnH8XoI',
@@ -98,6 +117,7 @@ final List<Video> videos = [
     viewCount: '18K',
     likes: '1k',
     dislikes: '4',
+    categoryId: '',
   ),
 ];
 
@@ -112,6 +132,7 @@ final List<Video> suggestedVideos = [
     viewCount: '32K',
     likes: '1.9k',
     dislikes: '7',
+    categoryId: '',
   ),
   Video(
     id: 'HvLb5gdUfDE',
@@ -123,6 +144,7 @@ final List<Video> suggestedVideos = [
     viewCount: '190K',
     likes: '9.3K',
     dislikes: '45',
+    categoryId: '',
   ),
   Video(
     id: 'h-igXZCCrrc',
@@ -134,5 +156,6 @@ final List<Video> suggestedVideos = [
     viewCount: '358K',
     likes: '20k',
     dislikes: '85',
+    categoryId: '',
   ),
 ];

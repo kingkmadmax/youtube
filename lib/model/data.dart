@@ -1,3 +1,32 @@
+class Channel {
+  final String id;
+  final String title;
+  final String description;
+  final String profileImageUrl;
+  final String subscriberCount;
+  final String videoCount;
+
+  const Channel({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.profileImageUrl,
+    required this.subscriberCount,
+    required this.videoCount,
+  });
+
+  factory Channel.fromJson(Map<String, dynamic> json) {
+    return Channel(
+      id: json['id'] ?? '',
+      title: json['snippet']?['title'] ?? 'Unknown',
+      description: json['snippet']?['description'] ?? '',
+      profileImageUrl: json['snippet']?['thumbnails']?['default']?['url'] ?? '',
+      subscriberCount: json['statistics']?['subscriberCount'] ?? '0',
+      videoCount: json['statistics']?['videoCount'] ?? '0',
+    );
+  }
+}
+
 class User {
   final String username;
   final String profileImageUrl;

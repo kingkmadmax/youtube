@@ -10,7 +10,7 @@ class YouTubeAPI {
       'part': 'snippet,contentDetails,statistics',
       'chart': 'mostPopular',
       'regionCode': 'US',
-      'maxResults': 10,
+      'maxResults': 2,
       'key': apiKey,
     });
 
@@ -24,6 +24,7 @@ class YouTubeAPI {
       'part': 'snippet',
       'q': searchTerms,
       'type': 'video',
+      'maxResults': 2,
       'key': apiKey,
     });
 
@@ -35,6 +36,7 @@ class YouTubeAPI {
     final response = await _baseAPI.get('$baseUrl/videoCategories', params: {
       'part': 'snippet',
       'regionCode': 'US',
+      'maxResults': 2,
       'key': apiKey,
     });
 
@@ -48,12 +50,36 @@ class YouTubeAPI {
       'type': 'video',
        'regionCode': 'US',
       'videoCategoryId': categoryId,
-      'maxResults': 10,
+      'maxResults': 2,
       'key': apiKey,
     });
 
     final List<dynamic> items = response.data['items'];
     return items.map((item) => Video.fromJson(item)).toList(); // Pass the entire item
+  }
+
+  Future<Channel> fetchChannelInfo(String channelId) async {
+    final response = await _baseAPI.get('$baseUrl/channels', params: {
+      'part': 'snippet,statistics',
+      'id': channelId,
+      'maxResults': 2,
+      'key': apiKey,
+    });
+
+    final item = response.data['items'][0];
+    return Channel.fromJson(item);
+  }
+
+  Future<List<Video>> fetchVideosByChannel(String channelId) async {
+    final response = await _baseAPI.get('$baseUrl/search', params: {
+      'part': 'snippet',
+      'channelId': channelId,
+      'maxResults': 2,
+      'key': apiKey,
+    });
+
+    final List<dynamic> items = response.data['items'];
+    return items.map((item) => Video.fromJson(item)).toList();
   }
 }
 

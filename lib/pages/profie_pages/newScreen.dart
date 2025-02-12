@@ -134,17 +134,18 @@ class _NewscreenState extends State<Newscreen> {
               ),
             ),
             SizedBox(
-              height: 30,
+              height: 50,
             ),
             Center(
               child: Container(
-                width: 300,
+                width: 400,
                 padding:
                     EdgeInsets.symmetric(vertical: 12), // Adds some padding
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
                   border: Border.all(
-                    color: Colors.blue, // Outline color
+                    color: const Color.fromARGB(
+                        255, 255, 255, 255), // Outline color
                     width: 2, // Border thickness
                   ),
                 ),
@@ -155,7 +156,7 @@ class _NewscreenState extends State<Newscreen> {
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: Colors.blue),
+                        color: const Color.fromARGB(255, 248, 248, 248)),
                   ),
                 ),
               ),

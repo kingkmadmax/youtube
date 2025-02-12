@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:miniplayer/miniplayer.dart';
 import 'package:youtube/model/data.dart';
+import 'package:youtube/pages/profile.dart';
 import 'package:youtube/providers/video_provider.dart';
 import 'package:youtube/widgets/video_card.dart';
 import 'home_screen.dart';
@@ -26,7 +27,7 @@ HomeScreen(),
 const Scaffold(body: Center(child: Text('Explore'))),
 const Scaffold(body: Center(child: Text('Add'))),
 const Scaffold(body: Center(child: Text('Subscriptions'))),
-const Scaffold(body: Center(child: Text('Library'))),
+Profile()
 ];
 
 

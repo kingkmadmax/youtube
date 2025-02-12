@@ -12,12 +12,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late Future<List<Video>> _videos;
+  late Future<List<String>> _categories = Future.value([]); // Initialize with an empty list
   int selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
     _videos = YouTubeAPI().fetchVideos();
+    _categories = YouTubeAPI().fetchCategories();
   }
 
   @override
@@ -54,71 +56,85 @@ class _HomeScreenState extends State<HomeScreen> {
             slivers: [
               CustomSliverAppBar(),
               SliverToBoxAdapter(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 0),
-                  height: 25,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Scaffold.of(context).openDrawer();
-                          },
-                          child: Material(
-                            color: Colors.transparent,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 46, 46, 46),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.explore,
-                                  color: Colors.white,
-                                  size: 24,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      for (int i = 0; i < genreList.length; i++)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedIndex = i + 1;
-                              });
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
-                              decoration: BoxDecoration(
-                                color: selectedIndex == i + 1 ? Colors.white : const Color.fromARGB(255, 46, 46, 46),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  genreList[i],
-                                  style: TextStyle(
-                                    color: selectedIndex == i + 1 ? Colors.black : Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
+                child: FutureBuilder<List<String>>(
+                  future: _categories,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return Center(child: Text('No categories found'));
+                    } else {
+                      final categories = snapshot.data!;
+                      return Container(
+                        padding: const EdgeInsets.symmetric(vertical: 0),
+                        height: 35, // Increased height here
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Scaffold.of(context).openDrawer();
+                                },
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(255, 46, 46, 46),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.explore,
+                                        color: Colors.white,
+                                        size: 24,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
+                            for (int i = 0; i < categories.length; i++)
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedIndex = i + 1;
+                                    });
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+                                    decoration: BoxDecoration(
+                                      color: selectedIndex == i + 1 ? Colors.white : const Color.fromARGB(255, 46, 46, 46),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        categories[i],
+                                        style: TextStyle(
+                                          color: selectedIndex == i + 1 ? Colors.black : Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
-                    ],
-                  ),
+                      );
+                    }
+                  },
                 ),
               ),
               SliverPadding(
-                padding: const EdgeInsets.only(bottom: 60.0),
+                padding: const EdgeInsets.only(bottom: 60.0, top: 10.0), // Added top padding here
                 sliver: FutureBuilder<List<Video>>(
                   future: _videos,
                   builder: (context, snapshot) {
@@ -155,7 +171,5 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  List<String> genreList = [
-    "All", "New to You", "Podcast", "Couple", "Music", "Trending", "Gaming", "Live", "Comedy"
-  ];
+  // Remove the hardcoded genreList
 }

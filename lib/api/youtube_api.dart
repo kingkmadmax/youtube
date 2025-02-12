@@ -30,4 +30,15 @@ class YouTubeAPI {
     final List<dynamic> items = response.data['items'];
     return items.map((item) => Video.fromJson(item as Map<String, dynamic>)).toList();
   }
+
+  Future<List<String>> fetchCategories() async {
+    final response = await _baseAPI.get('$baseUrl/videoCategories', params: {
+      'part': 'snippet',
+      'regionCode': 'US',
+      'key': apiKey,
+    });
+
+    final List<dynamic> items = response.data['items'];
+    return items.map((item) => item['snippet']['title'] as String).toList();
+  }
 }

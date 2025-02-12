@@ -95,6 +95,20 @@ class _ChannelPageState extends State<ChannelPage> {
                           ],
                         ),
                       ),
+
+                      
+                        Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          channel.description,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                          ),
+                        ),
+                        ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: SizedBox(
@@ -116,14 +130,6 @@ class _ChannelPageState extends State<ChannelPage> {
                       ),
 
            
-                        Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          channel.description,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        ),
                     ],
                   );
                 }

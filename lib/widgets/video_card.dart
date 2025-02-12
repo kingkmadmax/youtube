@@ -5,6 +5,7 @@ import 'package:youtube/providers/video_provider.dart';
 import 'package:miniplayer/miniplayer.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:intl/intl.dart';
+import 'package:youtube/screens/channel_page.dart';
 
 class VideoCard extends ConsumerWidget {
   final Video video;
@@ -101,7 +102,14 @@ class VideoCard extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 GestureDetector(
-                  onTap: () => print('Navigate to profile'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ChannelPage(channelId: video.channelId),
+                      ),
+                    );
+                  },
                   child: CircleAvatar(
                     foregroundImage: NetworkImage(video.author.profileImageUrl ?? ''),
                   ),

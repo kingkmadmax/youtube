@@ -25,10 +25,10 @@ static const double _playerMinHeight = 80.0;
 
 
 final List<Widget> _screens = [
-  ChannelPage(channelId: "UCBJycsmduvYEL83R_U4JriQ"),
 HomeScreen(),
 const Scaffold(body: Center(child: Text('Explore'))),
 const Scaffold(body: Center(child: Text('Add'))),
+const Scaffold(body: Center(child: Text('Subscriptions'))),
 
 Profile()
 ];

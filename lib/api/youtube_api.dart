@@ -46,6 +46,7 @@ class YouTubeAPI {
     final response = await _baseAPI.get('$baseUrl/search', params: {
       'part': 'snippet',
       'type': 'video',
+       'regionCode': 'US',
       'videoCategoryId': categoryId,
       'maxResults': 10,
       'key': apiKey,

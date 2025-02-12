@@ -49,6 +49,7 @@ class Video {
   final String viewCount;
   final String likes;
   final String dislikes;
+  final String categoryId;
 
   const Video({
     required this.id,
@@ -60,6 +61,7 @@ class Video {
     required this.viewCount,
     required this.likes,
     required this.dislikes,
+    required this.categoryId,
   });
 
   factory Video.fromJson(Map<String, dynamic> json) {
@@ -74,6 +76,7 @@ class Video {
       viewCount: json['statistics']?['viewCount'] ?? '0',
       likes: json['statistics']?['likeCount'] ?? '0',
       dislikes: json['statistics']?['dislikeCount'] ?? '0',
+      categoryId: json['snippet']?['categoryId'] ?? '',
     );
   }
 }
@@ -89,6 +92,7 @@ final List<Video> videos = [
     viewCount: '10K',
     likes: '958',
     dislikes: '4',
+    categoryId: '',
   ),
   Video(
     author: currentUser,
@@ -101,6 +105,7 @@ final List<Video> videos = [
     viewCount: '8K',
     likes: '485',
     dislikes: '8',
+    categoryId: '',
   ),
   Video(
     id: 'ilX5hnH8XoI',
@@ -112,6 +117,7 @@ final List<Video> videos = [
     viewCount: '18K',
     likes: '1k',
     dislikes: '4',
+    categoryId: '',
   ),
 ];
 
@@ -126,6 +132,7 @@ final List<Video> suggestedVideos = [
     viewCount: '32K',
     likes: '1.9k',
     dislikes: '7',
+    categoryId: '',
   ),
   Video(
     id: 'HvLb5gdUfDE',
@@ -137,6 +144,7 @@ final List<Video> suggestedVideos = [
     viewCount: '190K',
     likes: '9.3K',
     dislikes: '45',
+    categoryId: '',
   ),
   Video(
     id: 'h-igXZCCrrc',
@@ -148,5 +156,6 @@ final List<Video> suggestedVideos = [
     viewCount: '358K',
     likes: '20k',
     dislikes: '85',
+    categoryId: '',
   ),
 ];

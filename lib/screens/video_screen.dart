@@ -34,7 +34,11 @@ _isPlaying = widget.youtubeController.value.isPlaying;
 });
 }
 });
-_suggestedVideos = YouTubeAPI().fetchSuggestedVideos(widget.youtubeController.metadata.title);
+final categoryId = ref.read(selectedVideoProvider)?.categoryId ?? '';
+_suggestedVideos = YouTubeAPI().fetchVideosByCategory(categoryId).catchError((error) {
+print('Error fetching suggested videos: $error');
+return [];
+});
 }
 
 @override

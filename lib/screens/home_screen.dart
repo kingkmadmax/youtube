@@ -24,7 +24,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _loadCategoryVideos(String categoryId) {
     setState(() {
-      _videos = YouTubeAPI().fetchVideosByCategory(categoryId);
+      _videos = YouTubeAPI().fetchVideosByCategory(categoryId).catchError((error) {
+        print('Error fetching category videos: $error');
+        return [];
+      });
     });
   }
 

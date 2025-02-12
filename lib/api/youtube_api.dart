@@ -17,4 +17,17 @@ class YouTubeAPI {
     final List<dynamic> items = response.data['items'];
     return items.map((item) => Video.fromJson(item)).toList();
   }
+
+  Future<List<Video>> fetchSuggestedVideos(String videoTitle) async {
+    final searchTerms = videoTitle.split(' ').take(3).join(' ');
+    final response = await _baseAPI.get('$baseUrl/search', params: {
+      'part': 'snippet',
+      'q': searchTerms,
+      'type': 'video',
+      'key': apiKey,
+    });
+
+    final List<dynamic> items = response.data['items'];
+    return items.map((item) => Video.fromJson(item as Map<String, dynamic>)).toList();
+  }
 }

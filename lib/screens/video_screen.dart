@@ -7,6 +7,7 @@ import 'package:youtube/screens/nav_screen.dart';
 import 'package:youtube/widgets/video_card.dart';
 import 'package:youtube/widgets/video_info.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:youtube/api/youtube_api.dart';
 
 class VideoScreen extends ConsumerStatefulWidget {
 final YoutubePlayerController youtubeController;
@@ -20,6 +21,7 @@ _VideoScreenState createState() => _VideoScreenState();
 class _VideoScreenState extends ConsumerState<VideoScreen> {
 ScrollController? _scrollController;
 bool _isPlaying = false;
+late Future<List<Video>> _suggestedVideos;
 
 @override
 void initState() {
@@ -32,6 +34,7 @@ _isPlaying = widget.youtubeController.value.isPlaying;
 });
 }
 });
+_suggestedVideos = YouTubeAPI().fetchSuggestedVideos(widget.youtubeController.metadata.title);
 }
 
 @override
@@ -88,7 +91,7 @@ miniPlayerController.state
 ],
 ),
 const LinearProgressIndicator(
-value: 0.4,
+value: 0.04,
 valueColor: AlwaysStoppedAnimation<Color>(
 Colors.red,
 ),
@@ -102,10 +105,28 @@ selectedVideo != null
 },
 ),
 ),
-SliverList(
+SliverPadding(
+padding: const EdgeInsets.only(bottom: 60.0),
+sliver: FutureBuilder<List<Video>>(
+future: _suggestedVideos,
+builder: (context, snapshot) {
+if (snapshot.connectionState == ConnectionState.waiting) {
+return SliverToBoxAdapter(
+child: Center(child: CircularProgressIndicator()),
+);
+} else if (snapshot.hasError) {
+return SliverToBoxAdapter(
+child: Center(child: Text('Error: ${snapshot.error}')),
+);
+} else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+return SliverToBoxAdapter(
+child: Center(child: Text('No suggested videos found')),
+);
+} else {
+return SliverList(
 delegate: SliverChildBuilderDelegate(
 (context, index) {
-final video = suggestedVideos[index];
+final video = snapshot.data![index];
 return VideoCard(
 video: video,
 hasPadding: true,
@@ -120,7 +141,11 @@ curve: Curves.easeIn,
 },
 );
 },
-childCount: suggestedVideos.length,
+childCount: snapshot.data?.length ?? 0,
+),
+);
+}
+},
 ),
 ),
 ],

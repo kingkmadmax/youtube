@@ -38,6 +38,7 @@ dependencies:
   flutter_riverpod: ^2.6.1
   miniplayer: ^1.0.1
   dio: ^5.8.0+1
+  timeago: ^3.7.0
  
 dev_dependencies:
   flutter_test:

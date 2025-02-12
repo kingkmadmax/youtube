@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:youtube/widgets/cutom_sliver_app_bar.dart';
-
+import 'package:youtube/widgets/drawer.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -16,32 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // Drawer for sliding from the left
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            // Updated DrawerHeader with the same size as the app bar logo
-            DrawerHeader(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 12.0),
-                child: Image.asset(
-                  'assets/yt_logo_dark.png',
-                  width: 10, // Same width as in the SliverAppBar
-                  height: 5, // Adjusted height to match the app bar logo height
-                ),
-              ),
-            ),
-            ListTile(
-              title: Text('Item 1'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: Text('Item 2'),
-              onTap: () {},
-            ),
-          ],
-        ),
-      ),
+      drawer: const MyDrawer(),
       body: Builder(
         builder: (BuildContext context) {
           return CustomScrollView(
@@ -68,8 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Container(
                               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
                               decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 46, 46, 46),
-                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.grey[800],
+                                borderRadius: BorderRadius.circular(4),
                               ),
                               child: Center(
                                 child: Icon(
@@ -96,14 +71,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
                               decoration: BoxDecoration(
                                 color: selectedIndex == i + 1 ? Colors.white : const Color.fromARGB(255, 46, 46, 46),
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(4),
                               ),
                               child: Center(
                                 child: Text(
                                   genreList[i],
                                   style: TextStyle(
                                     color: selectedIndex == i + 1 ? Colors.black : Colors.white,
-                                    fontSize: 14,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

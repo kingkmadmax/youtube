@@ -8,6 +8,7 @@ import 'home_screen.dart';
 import 'package:youtube/screens/video_screen.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+
 class NavScreen extends ConsumerStatefulWidget {
 const NavScreen({super.key});
 
@@ -18,6 +19,7 @@ _NavScreenState createState() => _NavScreenState();
 class _NavScreenState extends ConsumerState<NavScreen> {
 int _selectedIndex = 0;
 static const double _playerMinHeight = 80.0;
+
 
 final List<Widget> _screens = [
 HomeScreen(),
@@ -211,3 +213,4 @@ return Scaffold(
 );
 }
 }
+

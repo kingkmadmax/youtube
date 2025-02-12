@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 
 class DescriptionPopout extends StatefulWidget {
+  final String description;
+final String title;
+
+  const DescriptionPopout({Key? key, required this.description, required this.title}) : super(key: key);
+
   @override
   _DescriptionPopoutState createState() => _DescriptionPopoutState();
 }
 
 class _DescriptionPopoutState extends State<DescriptionPopout> {
   bool isExpanded = false;
-  String fullText =
-      "Thanks to REDMAGIC for sponsoring this video! Check out the REDMAGIC 10 Pro.\n\n"
-      "Happy New Year! Well, Chinese New Year! To celebrate, we asked our friends from China, Taiwan, and even some BiliBili Creators to send over their gaming setups and battlestations for Jake, Linus, and Andy to roast.";
 
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
-      initialChildSize: 0.6, // Initial size (40% of screen height)
-      minChildSize: 0.3, // Minimum size (20% of screen height)
+      initialChildSize: 0.6, // Initial size (60% of screen height)
+      minChildSize: 0.3, // Minimum size (30% of screen height)
       maxChildSize: 0.9, // Maximum size (90% of screen height)
       expand: false, // Prevent the sheet from expanding to full height by default
       builder: (context, scrollController) {
@@ -62,7 +64,7 @@ class _DescriptionPopoutState extends State<DescriptionPopout> {
                   Divider(color: Colors.grey[600]),
                   SizedBox(height: 20),
                   Text(
-                    "Reacting to INSANE Chinese Gaming Setups",
+                    widget.title,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -89,7 +91,7 @@ class _DescriptionPopoutState extends State<DescriptionPopout> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          isExpanded ? fullText : fullText.substring(0, 100) + "...",
+                          isExpanded ? widget.description : widget.description.substring(0, 100) + "...",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 12,

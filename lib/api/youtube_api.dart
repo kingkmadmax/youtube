@@ -1,6 +1,7 @@
 import 'package:youtube/api/base_apis.dart';
 import 'package:youtube/utils/constants.dart';
 import 'package:youtube/model/data.dart';
+import 'package:youtube/model/comment.dart';
 
 class YouTubeAPI {
   final BaseAPI _baseAPI = BaseAPI();
@@ -81,6 +82,18 @@ class YouTubeAPI {
 
     final List<dynamic> items = response.data['items'];
     return items.map((item) => Video.fromJson(item)).toList();
+  }
+
+  Future<List<Comment>> fetchCommentsByVideoId(String videoId) async {
+    final response = await _baseAPI.get('$baseUrl/commentThreads', params: {
+      'part': 'snippet',
+      'videoId': videoId,
+      'maxResults': 4,
+      'key': apiKey,
+    });
+
+    final List<dynamic> items = response.data['items'];
+    return items.map((item) => Comment.fromJson(item)).toList();
   }
 }
 

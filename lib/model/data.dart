@@ -85,6 +85,7 @@ class Video {
   final String dislikes;
   final String categoryId;
   final String channelId;
+  final String description;
 
   const Video({
     required this.id,
@@ -98,6 +99,7 @@ class Video {
     required this.dislikes,
     required this.categoryId,
     required this.channelId,
+    required this.description,
   });
 
   factory Video.fromJson(Map<String, dynamic> json) {
@@ -115,7 +117,8 @@ class Video {
       likes: json['statistics']?['likeCount'] ?? '0',
       dislikes: json['statistics']?['dislikeCount'] ?? '0',
       categoryId: json['snippet']?['categoryId'] ?? '',
-      channelId: json['snippet']?['channelId'] ?? '', 
+      channelId: json['snippet']?['channelId'] ?? '',
+      description: json['snippet']?['description'] ?? '',
     );
   }
 }

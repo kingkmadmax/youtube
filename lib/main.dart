@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:youtube/pages/profile.dart';
 import 'package:youtube/screens/home_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youtube/screens/nav_screen.dart';
 
 void main() {
-  runApp(MyApp());
+runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

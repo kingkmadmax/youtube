@@ -11,7 +11,7 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      username: json['snippet']['channelTitle'] ?? 'Unknown',
+      username: json['snippet']?['channelTitle'] ?? 'Unknown',
       profileImageUrl: '', // YouTube API does not provide profile image URL directly
       subscribers: '', // YouTube API does not provide subscriber count directly
     );
@@ -24,6 +24,20 @@ const User currentUser = User(
       'https://yt3.ggpht.com/ytc/AAUvwniE2k5PgFu9yr4sBVEs9jdpdILdMc7ruiPw59DpS0k=s88-c-k-c0x00ffffff-no-rj',
   subscribers: '100K',
 );
+
+class Category {
+  final String id;
+  final String title;
+
+  Category({required this.id, required this.title});
+
+  factory Category.fromJson(Map<String, dynamic> json) {
+    return Category(
+      id: json['id'] as String,
+      title: json['snippet']['title'] as String,
+    );
+  }
+}
 
 class Video {
   final String id;
@@ -53,10 +67,10 @@ class Video {
     return Video(
       id: id ?? '',
       author: User.fromJson(json),
-      title: json['snippet']['title'] ?? 'No Title',
-      thumbnailUrl: json['snippet']['thumbnails']['high']['url'] ?? '',
+      title: json['snippet']?['title'] ?? 'No Title',
+      thumbnailUrl: json['snippet']?['thumbnails']?['high']?['url'] ?? '',
       duration: json['contentDetails']?['duration'] ?? '0:00',
-      timestamp: DateTime.parse(json['snippet']['publishedAt'] ?? DateTime.now().toIso8601String()),
+      timestamp: DateTime.parse(json['snippet']?['publishedAt'] ?? DateTime.now().toIso8601String()),
       viewCount: json['statistics']?['viewCount'] ?? '0',
       likes: json['statistics']?['likeCount'] ?? '0',
       dislikes: json['statistics']?['dislikeCount'] ?? '0',

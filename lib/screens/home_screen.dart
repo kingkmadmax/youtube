@@ -12,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late Future<List<Video>> _videos;
-  late Future<List<String>> _categories = Future.value([]); // Initialize with an empty list
+  late Future<List<Category>> _categories = Future.value([]); // Initialize with an empty list
   int selectedIndex = 0;
 
   @override
@@ -20,6 +20,12 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _videos = YouTubeAPI().fetchVideos();
     _categories = YouTubeAPI().fetchCategories();
+  }
+
+  void _loadCategoryVideos(String categoryId) {
+    setState(() {
+      _videos = YouTubeAPI().fetchVideosByCategory(categoryId);
+    });
   }
 
   @override
@@ -56,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
             slivers: [
               CustomSliverAppBar(),
               SliverToBoxAdapter(
-                child: FutureBuilder<List<String>>(
+                child: FutureBuilder<List<Category>>(
                   future: _categories,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -105,6 +111,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onTap: () {
                                     setState(() {
                                       selectedIndex = i + 1;
+                                      _loadCategoryVideos(categories[i].id);
+                                      print("Selected category: ${categories[i].title}");
                                     });
                                   },
                                   child: Container(
@@ -115,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     child: Center(
                                       child: Text(
-                                        categories[i],
+                                        categories[i].title,
                                         style: TextStyle(
                                           color: selectedIndex == i + 1 ? Colors.black : Colors.white,
                                           fontSize: 14,

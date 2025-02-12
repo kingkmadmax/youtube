@@ -133,7 +133,12 @@ class _ProfileState extends State<Profile> {
           style: const TextStyle(
               color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        _buildOutlinedButton("View all", onViewAllPressed),
+        Row(
+          children: [
+            Icon(Icons.add, color: Colors.white), // Add icon
+            _buildOutlinedButton("View all", onViewAllPressed),
+          ],
+        ),
       ],
     );
   }
@@ -146,7 +151,7 @@ class _ProfileState extends State<Profile> {
         margin: const EdgeInsets.only(right: 10),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         decoration: BoxDecoration(
-            color: Colors.grey.withOpacity(0.5),
+            color: const Color.fromARGB(255, 70, 70, 70).withOpacity(0.5),
             borderRadius: BorderRadius.circular(20)),
         child: Center(
           child: Text(

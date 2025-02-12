@@ -60,7 +60,7 @@ class YouTubeAPI {
 
   Future<Channel> fetchChannelInfo(String channelId) async {
     final response = await _baseAPI.get('$baseUrl/channels', params: {
-      'part': 'snippet,statistics',
+      'part': 'snippet,statistics,brandingSettings',
       'id': channelId,
       'maxResults': 2,
       'key': apiKey,
@@ -73,6 +73,7 @@ class YouTubeAPI {
   Future<List<Video>> fetchVideosByChannel(String channelId) async {
     final response = await _baseAPI.get('$baseUrl/search', params: {
       'part': 'snippet',
+      "order": "date",
       'channelId': channelId,
       'maxResults': 2,
       'key': apiKey,

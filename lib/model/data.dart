@@ -5,6 +5,7 @@ class Channel {
   final String profileImageUrl;
   final String subscriberCount;
   final String videoCount;
+  final String bannerImageUrl;
 
   const Channel({
     required this.id,
@@ -13,6 +14,7 @@ class Channel {
     required this.profileImageUrl,
     required this.subscriberCount,
     required this.videoCount,
+    required this.bannerImageUrl,
   });
 
   factory Channel.fromJson(Map<String, dynamic> json) {
@@ -20,9 +22,11 @@ class Channel {
       id: json['id'] ?? '',
       title: json['snippet']?['title'] ?? 'Unknown',
       description: json['snippet']?['description'] ?? '',
-      profileImageUrl: json['snippet']?['thumbnails']?['default']?['url'] ?? '',
+      profileImageUrl: json['snippet']?['thumbnails']?['medium']?['url'] ?? '',
       subscriberCount: json['statistics']?['subscriberCount'] ?? '0',
       videoCount: json['statistics']?['videoCount'] ?? '0',
+      bannerImageUrl:
+          json['brandingSettings']?['image']?['bannerExternalUrl'] ?? '',
     );
   }
 }
@@ -41,7 +45,8 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       username: json['snippet']?['channelTitle'] ?? 'Unknown',
-      profileImageUrl: '', // YouTube API does not provide profile image URL directly
+      profileImageUrl:
+          '', // YouTube API does not provide profile image URL directly
       subscribers: '', // YouTube API does not provide subscriber count directly
     );
   }
@@ -79,6 +84,7 @@ class Video {
   final String likes;
   final String dislikes;
   final String categoryId;
+  final String channelId;
 
   const Video({
     required this.id,
@@ -91,100 +97,104 @@ class Video {
     required this.likes,
     required this.dislikes,
     required this.categoryId,
+    required this.channelId,
   });
 
   factory Video.fromJson(Map<String, dynamic> json) {
-    final id = json['id'] is Map<String, dynamic> ? json['id']['videoId'] : json['id'];
+    final id =
+        json['id'] is Map<String, dynamic> ? json['id']['videoId'] : json['id'];
     return Video(
       id: id ?? '',
       author: User.fromJson(json),
       title: json['snippet']?['title'] ?? 'No Title',
       thumbnailUrl: json['snippet']?['thumbnails']?['high']?['url'] ?? '',
       duration: json['contentDetails']?['duration'] ?? '0:00',
-      timestamp: DateTime.parse(json['snippet']?['publishedAt'] ?? DateTime.now().toIso8601String()),
+      timestamp: DateTime.parse(
+          json['snippet']?['publishedAt'] ?? DateTime.now().toIso8601String()),
       viewCount: json['statistics']?['viewCount'] ?? '0',
       likes: json['statistics']?['likeCount'] ?? '0',
       dislikes: json['statistics']?['dislikeCount'] ?? '0',
       categoryId: json['snippet']?['categoryId'] ?? '',
+      channelId: json['snippet']?['channelId'] ?? '', 
     );
   }
 }
 
-final List<Video> videos = [
-  Video(
-    id: 'x606y4QWrxo',
-    author: currentUser,
-    title: 'Flutter Clubhouse Clone UI Tutorial | Apps From Scratch',
-    thumbnailUrl: 'https://i.ytimg.com/vi/x606y4QWrxo/0.jpg',
-    duration: '8:20',
-    timestamp: DateTime(2021, 3, 20),
-    viewCount: '10K',
-    likes: '958',
-    dislikes: '4',
-    categoryId: '',
-  ),
-  Video(
-    author: currentUser,
-    id: 'vrPk6LB9bjo',
-    title:
-        'Build Flutter Apps Fast with Riverpod, Firebase, Hooks, and Freezed Architecture',
-    thumbnailUrl: 'https://i.ytimg.com/vi/vrPk6LB9bjo/0.jpg',
-    duration: '22:06',
-    timestamp: DateTime(2021, 2, 26),
-    viewCount: '8K',
-    likes: '485',
-    dislikes: '8',
-    categoryId: '',
-  ),
-  Video(
-    id: 'ilX5hnH8XoI',
-    author: currentUser,
-    title: 'Flutter Instagram Stories',
-    thumbnailUrl: 'https://i.ytimg.com/vi/ilX5hnH8XoI/0.jpg',
-    duration: '10:53',
-    timestamp: DateTime(2020, 7, 12),
-    viewCount: '18K',
-    likes: '1k',
-    dislikes: '4',
-    categoryId: '',
-  ),
-];
+// final List<Video> videos = [
+//   Video(
+//     id: 'x606y4QWrxo',
+//     author: currentUser,
+//     title: 'Flutter Clubhouse Clone UI Tutorial | Apps From Scratch',
+//     thumbnailUrl: 'https://i.ytimg.com/vi/x606y4QWrxo/0.jpg',
+//     duration: '8:20',
+//     timestamp: DateTime(2021, 3, 20),
+//     viewCount: '10K',
+//     likes: '958',
+//     dislikes: '4',
+//     categoryId: '',
+//   ),
+//   Video(
+//     author: currentUser,
+//     id: 'vrPk6LB9bjo',
+//     title:
+//         'Build Flutter Apps Fast with Riverpod, Firebase, Hooks, and Freezed Architecture',
+//     thumbnailUrl: 'https://i.ytimg.com/vi/vrPk6LB9bjo/0.jpg',
+//     duration: '22:06',
+//     timestamp: DateTime(2021, 2, 26),
+//     viewCount: '8K',
+//     likes: '485',
+//     dislikes: '8',
+//     categoryId: '',
+//   ),
+//   Video(
+//     id: 'ilX5hnH8XoI',
+//     author: currentUser,
+//     title: 'Flutter Instagram Stories',
+//     thumbnailUrl: 'https://i.ytimg.com/vi/ilX5hnH8XoI/0.jpg',
+//     duration: '10:53',
+//     timestamp: DateTime(2020, 7, 12),
+//     viewCount: '18K',
+//     likes: '1k',
+//     dislikes: '4',
+//     categoryId: '',
+//   ),
+// ];
 
-final List<Video> suggestedVideos = [
-  Video(
-    id: 'rJKN_880b-M',
-    author: currentUser,
-    title: 'Flutter Netflix Clone Responsive UI Tutorial | Web and Mobile',
-    thumbnailUrl: 'https://i.ytimg.com/vi/rJKN_880b-M/0.jpg',
-    duration: '1:13:15',
-    timestamp: DateTime(2020, 8, 22),
-    viewCount: '32K',
-    likes: '1.9k',
-    dislikes: '7',
-    categoryId: '',
-  ),
-  Video(
-    id: 'HvLb5gdUfDE',
-    author: currentUser,
-    title: 'Flutter Facebook Clone Responsive UI Tutorial | Web and Mobile',
-    thumbnailUrl: 'https://i.ytimg.com/vi/HvLb5gdUfDE/0.jpg',
-    duration: '1:52:12',
-    timestamp: DateTime(2020, 8, 7),
-    viewCount: '190K',
-    likes: '9.3K',
-    dislikes: '45',
-    categoryId: '',
-  ),
-  Video(
-    id: 'h-igXZCCrrc',
-    author: currentUser,
-    title: 'Flutter Chat UI Tutorial | Apps From Scratch',
-    thumbnailUrl: 'https://i.ytimg.com/vi/h-igXZCCrrc/0.jpg',
-    duration: '1:03:58',
-    timestamp: DateTime(2019, 10, 17),
-    viewCount: '358K',
-    likes: '20k',
-    dislikes: '85',
-    categoryId: '',
-  ),
-];
+// final List<Video> suggestedVideos = [
+//   Video(
+//     id: 'rJKN_880b-M',
+//     author: currentUser,
+//     title: 'Flutter Netflix Clone Responsive UI Tutorial | Web and Mobile',
+//     thumbnailUrl: 'https://i.ytimg.com/vi/rJKN_880b-M/0.jpg',
+//     duration: '1:13:15',
+//     timestamp: DateTime(2020, 8, 22),
+//     viewCount: '32K',
+//     likes: '1.9k',
+//     dislikes: '7',
+//     categoryId: '',
+//   ),
+//   Video(
+//     id: 'HvLb5gdUfDE',
+//     author: currentUser,
+//     title: 'Flutter Facebook Clone Responsive UI Tutorial | Web and Mobile',
+//     thumbnailUrl: 'https://i.ytimg.com/vi/HvLb5gdUfDE/0.jpg',
+//     duration: '1:52:12',
+//     timestamp: DateTime(2020, 8, 7),
+//     viewCount: '190K',
+//     likes: '9.3K',
+//     dislikes: '45',
+//     categoryId: '',
+//   ),
+//   Video(
+//     id: 'h-igXZCCrrc',
+//     author: currentUser,
+//     title: 'Flutter Chat UI Tutorial | Apps From Scratch',
+//     thumbnailUrl: 'https://i.ytimg.com/vi/h-igXZCCrrc/0.jpg',
+//     duration: '1:03:58',
+//     timestamp: DateTime(2019, 10, 17),
+//     viewCount: '358K',
+//     likes: '20k',
+//     dislikes: '85',
+//     categoryId: '',
+//   ),
+// ];

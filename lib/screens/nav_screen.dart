@@ -23,6 +23,26 @@ class NavScreen extends ConsumerStatefulWidget {
 class _NavScreenState extends ConsumerState<NavScreen> {
   int _selectedIndex = 0;
   static const double _playerMinHeight = 60.0;
+  late YoutubePlayerController _youtubeController;
+
+  @override
+  void initState() {
+    super.initState();
+    final selectedVideo = ref.read(selectedVideoProvider);
+    _youtubeController = YoutubePlayerController(
+      initialVideoId: selectedVideo?.id ?? '8oIsZEhnqtA',
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
+        mute: false,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _youtubeController.dispose();
+    super.dispose();
+  }
 
   final List<Widget> _screens = [
     HomeScreen(),
@@ -67,11 +87,16 @@ class _NavScreenState extends ConsumerState<NavScreen> {
                       children: [
                         Row(
                           children: [
-                            Image.network(
-                              selectedVideo.thumbnailUrl ?? '',
-                              height: _playerMinHeight - 4.0,
+                            YoutubePlayer(
+                              controller: _youtubeController,
                               width: 120.0,
-                              fit: BoxFit.cover,
+                          
+                              showVideoProgressIndicator: true,
+                              progressIndicatorColor: Colors.red,
+                              progressColors: ProgressBarColors(
+                                playedColor: Colors.red,
+                                handleColor: Colors.redAccent,
+                              ),
                             ),
                             Expanded(
                               child: Padding(
@@ -111,7 +136,15 @@ class _NavScreenState extends ConsumerState<NavScreen> {
                             ),
                             IconButton(
                               icon: const Icon(Icons.play_arrow),
-                              onPressed: () {},
+                              onPressed: () {
+                                _youtubeController.play();
+                              },
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.pause),
+                              onPressed: () {
+                                _youtubeController.pause();
+                              },
                             ),
                             IconButton(
                               icon: const Icon(Icons.close),

@@ -36,12 +36,14 @@ class _ProfileState extends State<Profile> {
                         MaterialPageRoute(builder: (context) => Newscreen()),
                       );
                     },
+
                     child: const CircleAvatar(radius: 35),
                   ),
                   const SizedBox(width: 20),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+
                       children: [
                         const Text(
                           "Geafra Dellalue",

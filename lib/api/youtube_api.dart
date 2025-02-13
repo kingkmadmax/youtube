@@ -1,6 +1,7 @@
 import 'package:youtube/api/base_apis.dart';
 import 'package:youtube/utils/constants.dart';
 import 'package:youtube/model/data.dart';
+import 'package:youtube/model/comment.dart';
 
 class YouTubeAPI {
   final BaseAPI _baseAPI = BaseAPI();
@@ -10,7 +11,7 @@ class YouTubeAPI {
       'part': 'snippet,contentDetails,statistics',
       'chart': 'mostPopular',
       'regionCode': 'US',
-      'maxResults': 10,
+      'maxResults': 2,
       'key': apiKey,
     });
 
@@ -24,6 +25,7 @@ class YouTubeAPI {
       'part': 'snippet',
       'q': searchTerms,
       'type': 'video',
+      'maxResults': 2,
       'key': apiKey,
     });
 
@@ -35,6 +37,7 @@ class YouTubeAPI {
     final response = await _baseAPI.get('$baseUrl/videoCategories', params: {
       'part': 'snippet',
       'regionCode': 'US',
+      'maxResults': 2,
       'key': apiKey,
     });
 
@@ -48,12 +51,49 @@ class YouTubeAPI {
       'type': 'video',
        'regionCode': 'US',
       'videoCategoryId': categoryId,
-      'maxResults': 10,
+      'maxResults': 2,
       'key': apiKey,
     });
 
     final List<dynamic> items = response.data['items'];
     return items.map((item) => Video.fromJson(item)).toList(); // Pass the entire item
+  }
+
+  Future<Channel> fetchChannelInfo(String channelId) async {
+    final response = await _baseAPI.get('$baseUrl/channels', params: {
+      'part': 'snippet,statistics,brandingSettings',
+      'id': channelId,
+      'maxResults': 2,
+      'key': apiKey,
+    });
+
+    final item = response.data['items'][0];
+    return Channel.fromJson(item);
+  }
+
+  Future<List<Video>> fetchVideosByChannel(String channelId) async {
+    final response = await _baseAPI.get('$baseUrl/search', params: {
+      'part': 'snippet',
+      "order": "date",
+      'channelId': channelId,
+      'maxResults': 2,
+      'key': apiKey,
+    });
+
+    final List<dynamic> items = response.data['items'];
+    return items.map((item) => Video.fromJson(item)).toList();
+  }
+
+  Future<List<Comment>> fetchCommentsByVideoId(String videoId) async {
+    final response = await _baseAPI.get('$baseUrl/commentThreads', params: {
+      'part': 'snippet',
+      'videoId': videoId,
+      'maxResults': 4,
+      'key': apiKey,
+    });
+
+    final List<dynamic> items = response.data['items'];
+    return items.map((item) => Comment.fromJson(item)).toList();
   }
 }
 

@@ -5,6 +5,7 @@ import 'package:youtube/model/data.dart';
 import 'package:youtube/pages/profile.dart';
 import 'package:youtube/providers/video_provider.dart';
 import 'package:youtube/screens/channel_page.dart';
+import 'package:youtube/screens/shorts_page.dart';
 
 import 'package:youtube/widgets/video_card.dart';
 import 'home_screen.dart';
@@ -26,9 +27,10 @@ static const double _playerMinHeight = 80.0;
 
 final List<Widget> _screens = [
 HomeScreen(),
-const Scaffold(body: Center(child: Text('Explore'))),
+ShortsPage(),
 const Scaffold(body: Center(child: Text('Add'))),
-// ChannelPage(),
+const Scaffold(body: Center(child: Text('Subscriptions'))),
+
 Profile()
 ];
 

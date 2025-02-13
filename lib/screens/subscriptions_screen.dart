@@ -51,7 +51,7 @@ class SubscriptionsScreen extends StatelessWidget {
 
     final List<Map<String, dynamic>> videos = [
       {
-        'thumbnail': 'https://i.ytimg.com/vi/HvLb5gdUfDE/0.jpg',
+        'thumbnail': 'https://i.ytimg.com/vi/bScxXio_gH8/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAMSzfuVDNiJ_sm9mwNgUWZd7LGgQ',
         'channelLogo': 'https://via.placeholder.com/50.png?text=CH1',
         'title': 'How to Build a Flutter App - Full Guide',
         'channelName': 'Tech Channel',
@@ -60,7 +60,7 @@ class SubscriptionsScreen extends StatelessWidget {
         'isLive': false,
       },
       {
-        'thumbnail': 'https://i.ytimg.com/vi/HvLb5gdUfDE/0.jpg',
+        'thumbnail': 'https://i.ytimg.com/vi/lBXPgprZAZM/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDTe_8Qygn4DET5i5yjH227rotqtA',
         'channelLogo': 'https://via.placeholder.com/50.png?text=CH2',
         'title': 'Live Coding Session - Flutter UI Design',
         'channelName': 'DevLive',
@@ -69,7 +69,7 @@ class SubscriptionsScreen extends StatelessWidget {
         'isLive': true,
       },
       {
-        'thumbnail': 'https://i.ytimg.com/vi/HvLb5gdUfDE/0.jpg',
+        'thumbnail': 'https://i.ytimg.com/vi/NIUtyzuFFOM/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLC8uyPuMz-1sQGjLiZyIXiZ__TtRw',
         'channelLogo': 'https://via.placeholder.com/50.png?text=CH3',
         'title': 'Top 10 Flutter Packages You Should Know',
         'channelName': 'Flutter Guru',
@@ -78,7 +78,7 @@ class SubscriptionsScreen extends StatelessWidget {
         'isLive': false,
       },
       {
-        'thumbnail': 'https://i.ytimg.com/vi/HvLb5gdUfDE/0.jpg',
+        'thumbnail': 'https://i9.ytimg.com/vi/X3ARdNAAnXI/hq720_custom_2.jpg?sqp=CKyat70G-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCNlQ9Qk18iKM3qU5iBmq1PqhPxrw',
         'channelLogo': 'https://via.placeholder.com/50.png?text=CH3',
         'title': 'Top 10 Flutter Packages You dont Should Know',
         'channelName': 'Flutter Guru',
@@ -271,7 +271,7 @@ class SubscriptionsScreen extends StatelessWidget {
                           children: [
                             Image.network(video['thumbnail'],
                                 width: double.infinity,
-                                height: 180,
+                                height: 220,
                                 fit: BoxFit.cover),
                             if (video['isLive'])
                               Positioned(

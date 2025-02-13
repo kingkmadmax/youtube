@@ -57,10 +57,12 @@ class VideoCard extends ConsumerWidget {
         ref.read(youtubePlayerControllerProvider.notifier).updateVideo(video);
 
         print('selected video: ${video.title}');
-        ref
-            .read(miniPlayerControllerProvider.notifier)
-            .state
-            .animateToHeight(state: PanelState.MAX);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          ref
+              .read(miniPlayerControllerProvider.notifier)
+              .state
+              .animateToHeight(state: PanelState.MAX);
+        });
         if (onTap != null) onTap!();
       },
       child: Column(

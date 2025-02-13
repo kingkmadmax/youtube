@@ -135,7 +135,7 @@ class _ProfileState extends State<Profile> {
         ),
         Row(
           children: [
-            Icon(Icons.add, color: Colors.white), // Add icon
+            // Add icon
             _buildOutlinedButton("View all", onViewAllPressed),
           ],
         ),
@@ -151,7 +151,7 @@ class _ProfileState extends State<Profile> {
         margin: const EdgeInsets.only(right: 10),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 70, 70, 70).withOpacity(0.5),
+            color: const Color.fromARGB(255, 70, 70, 70),
             borderRadius: BorderRadius.circular(20)),
         child: Center(
           child: Text(
@@ -204,11 +204,24 @@ class _ProfileState extends State<Profile> {
       child: Column(
         children: [
           SizedBox(
-            width: 130,
-            child: Image.asset(imagePath, fit: BoxFit.cover),
+            width: 170, // Set width
+            height: 80, // Set height
+            child: ClipRRect(
+              borderRadius:
+                  BorderRadius.circular(10), // Optional: Rounded corners
+              child: Image.asset(imagePath, fit: BoxFit.cover),
+            ),
           ),
           const SizedBox(height: 10),
-          Text(title, style: const TextStyle(color: Colors.white)),
+          SizedBox(
+            width: 130, // Ensure the text aligns with the image
+            child: Text(
+              title,
+              style: const TextStyle(color: Colors.white),
+              textAlign: TextAlign.left,
+              overflow: TextOverflow.ellipsis, // Prevent text overflow
+            ),
+          ),
         ],
       ),
     );
@@ -221,9 +234,13 @@ class _ProfileState extends State<Profile> {
       physics: const NeverScrollableScrollPhysics(),
       children: [
         ListTile(
-          leading: const Icon(Icons.smart_display, color: Colors.white),
+          leading: const Icon(
+            Icons.smart_display,
+            color: Colors.white,
+            size: 20,
+          ),
           title: const Text("Your videos",
-              style: TextStyle(fontSize: 20, color: Colors.white)),
+              style: TextStyle(fontSize: 15, color: Colors.white)),
           onTap: () {
             Navigator.push(
               context,
@@ -232,9 +249,9 @@ class _ProfileState extends State<Profile> {
           },
         ),
         ListTile(
-          leading: const Icon(Icons.download, color: Colors.white),
+          leading: const Icon(Icons.download, color: Colors.white, size: 20),
           title: const Text("Downloads",
-              style: TextStyle(fontSize: 20, color: Colors.white)),
+              style: TextStyle(fontSize: 15, color: Colors.white)),
           onTap: () {
             Navigator.push(
               context,
@@ -244,9 +261,13 @@ class _ProfileState extends State<Profile> {
         ),
         const Divider(color: Colors.white, thickness: 1),
         ListTile(
-          leading: const Icon(Icons.local_movies, color: Colors.white),
+          leading: const Icon(
+            Icons.local_movies,
+            color: Colors.white,
+            size: 20,
+          ),
           title: const Text("Your Movies",
-              style: TextStyle(fontSize: 20, color: Colors.white)),
+              style: TextStyle(fontSize: 15, color: Colors.white)),
           onTap: () {
             Navigator.push(
               context,
@@ -256,9 +277,10 @@ class _ProfileState extends State<Profile> {
         ),
         const Divider(color: Colors.white, thickness: 1),
         ListTile(
-          leading: const Icon(Icons.insert_chart, color: Colors.white),
+          leading:
+              const Icon(Icons.insert_chart, color: Colors.white, size: 20),
           title: const Text("Time watched",
-              style: TextStyle(fontSize: 20, color: Colors.white)),
+              style: TextStyle(fontSize: 15, color: Colors.white)),
           onTap: () {
             Navigator.push(
               context,
@@ -267,9 +289,9 @@ class _ProfileState extends State<Profile> {
           },
         ),
         ListTile(
-          leading: const Icon(Icons.help, color: Colors.white),
+          leading: const Icon(Icons.help, color: Colors.white, size: 20),
           title: const Text("Help & feedback",
-              style: TextStyle(fontSize: 20, color: Colors.white)),
+              style: TextStyle(fontSize: 15, color: Colors.white)),
           onTap: () {
             Navigator.push(
               context,

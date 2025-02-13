@@ -70,21 +70,32 @@ class _ProfileState extends State<Profile> {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    _buildTag("Switch account", () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SwitchAccount()),
-                      );
-                    }),
-                    _buildTag("Google Account", () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SwitchAccount()),
-                      );
-                    }),
-                    _buildTag("Turn on Incognito"),
+                    _buildTag(
+                      "Switch account",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SwitchAccount()),
+                        );
+                      },
+                      icon: Icons.swap_horiz, // Example icon
+                    ),
+                    _buildTag(
+                      "Google Account",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SwitchAccount()),
+                        );
+                      },
+                      icon: Icons.account_circle, // Example icon
+                    ),
+                    _buildTag(
+                      "Turn on Incognito",
+                      icon: Icons.visibility_off, // Example icon
+                    ),
                   ],
                 ),
               ),
@@ -110,7 +121,7 @@ class _ProfileState extends State<Profile> {
                 );
               }),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 15),
               _buildHorizontalListView(),
               const SizedBox(height: 20),
 
@@ -144,20 +155,28 @@ class _ProfileState extends State<Profile> {
   }
 
   // Helper function for small tags
-  Widget _buildTag(String text, [VoidCallback? onTap]) {
+  Widget _buildTag(String text, {VoidCallback? onTap, IconData? icon}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.only(right: 10),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 70, 70, 70),
-            borderRadius: BorderRadius.circular(20)),
-        child: Center(
-          child: Text(
-            text,
-            style: const TextStyle(color: Colors.white),
-          ),
+          color: const Color.fromARGB(255, 70, 70, 70),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (icon != null) ...[
+              Icon(icon, color: Colors.white, size: 16),
+              const SizedBox(width: 5), // Spacing between icon and text
+            ],
+            Text(
+              text,
+              style: const TextStyle(color: Colors.white),
+            ),
+          ],
         ),
       ),
     );
@@ -168,13 +187,14 @@ class _ProfileState extends State<Profile> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.white),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Center(
-          child: Text(text, style: const TextStyle(color: Colors.white)),
+          child: Text(text,
+              style: const TextStyle(color: Colors.white, fontSize: 12)),
         ),
       ),
     );
@@ -183,7 +203,7 @@ class _ProfileState extends State<Profile> {
   // Helper function for horizontal scrolling list
   Widget _buildHorizontalListView() {
     return SizedBox(
-      height: 150,
+      height: 120,
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: [
@@ -204,7 +224,7 @@ class _ProfileState extends State<Profile> {
       child: Column(
         children: [
           SizedBox(
-            width: 170, // Set width
+            width: 140, // Set width
             height: 80, // Set height
             child: ClipRRect(
               borderRadius:

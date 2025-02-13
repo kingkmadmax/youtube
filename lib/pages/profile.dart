@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:youtube/pages/newScreen.dart';
+import 'package:youtube/pages/profie_pages/newScreen.dart';
+import 'package:youtube/pages/profie_pages/view_all.dart';
+import 'package:youtube/pages/profie_pages/view_all2.dart';
+import 'package:youtube/pages/profie_pages/switch_account.dart';
+import 'package:youtube/pages/profie_pages/Help_&_feedback.dart';
+import 'package:youtube/pages/profie_pages/Time_watched.dart';
+import 'package:youtube/pages/profie_pages/your_Movies.dart';
+import 'package:youtube/pages/profie_pages/Downloads.dart';
+import 'package:youtube/pages/profie_pages/Your_videos.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -12,341 +20,308 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        margin: EdgeInsets.only(left: 30, top: 20),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                GestureDetector(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.only(left: 30, top: 20, right: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Profile Row
+              Row(
+                children: [
+                  GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => Newscreen()),
                       );
                     },
-                    child: const CircleAvatar(
-                      radius: 35,
-                    )),
-                const SizedBox(width: 30),
-                Column(
-                  children: [
-                    const Text(
-                      "Geafra Dellalue",
-                      style: TextStyle(
-                        fontSize: 22,
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        
-                      ),
-                    ),
-                    Row(
+
+                    child: const CircleAvatar(radius: 35),
+                  ),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+
                       children: [
                         const Text(
-                          'create a channel',
+                          "Geafra Dellalue",
                           style: TextStyle(
-                              color: Color.fromARGB(255, 169, 169, 169)),
+                            fontSize: 22,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        const SizedBox(width: 5),
-                        const Icon(
-                          Icons.arrow_right_sharp,
-                          color: Color.fromARGB(255, 169, 169, 169),
+                        Row(
+                          children: const [
+                            Text('Create a channel',
+                                style: TextStyle(color: Colors.grey)),
+                            Icon(Icons.arrow_right, color: Colors.grey),
+                          ],
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            // the small tags
-            Row(
-              children: [
-                Container(
-                  width: 130,
-                  height: 25,
-                  decoration: BoxDecoration(
-                      color: const Color.fromARGB(60, 135, 130, 130),
-                      borderRadius: BorderRadius.circular(25)),
-                  child: Center(
-                    child: Text(
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+
+              // Small Tags Row (Scrollable)
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    _buildTag(
                       "Switch account",
-                      style: TextStyle(color: Colors.white),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SwitchAccount()),
+                        );
+                      },
+                      icon: Icons.swap_horiz, // Example icon
                     ),
-                  ),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Container(
-                  width: 130,
-                  height: 25,
-                  decoration: BoxDecoration(
-                      color: const Color.fromARGB(60, 135, 130, 130),
-                      borderRadius: BorderRadius.circular(25)),
-                  child: Center(
-                    child: Text(
-                      "google Account",
-                      style: TextStyle(color: Colors.white),
+                    _buildTag(
+                      "Google Account",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SwitchAccount()),
+                        );
+                      },
+                      icon: Icons.account_circle, // Example icon
                     ),
-                  ),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Container(
-                  width: 130,
-                  height: 25,
-                  decoration: BoxDecoration(
-                      color: const Color.fromARGB(60, 135, 130, 130),
-                      borderRadius: BorderRadius.circular(25)),
-                  child: Center(
-                    child: Text(
+                    _buildTag(
                       "Turn on Incognito",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            // the History section, adjusted to move right
-            Column(
-              children: [
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 20), // Padding added to move it to the right
-                      child: Text(
-                        'History',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    SizedBox(
-                      width:
-                          250, // Adjusted this width to push the 'View all' button to the right
-                    ),
-                    Container(
-                      width: 70,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: Colors.white, // Border color
-                          width: 1.0, // Border width
-                          style: BorderStyle.solid, // Border style
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "View all",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
+                      icon: Icons.visibility_off, // Example icon
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
-                // Updated ListView
-                SizedBox(
-                  height: 150, // Set a fixed height to avoid vertical overflow
-                  child: ListView(
-                    scrollDirection:
-                        Axis.horizontal, // Enable horizontal scrolling
-                    children: [
-                      Column(
-                        children: [
-                          Container(
-                            width: 100,
-                            child: Image.asset('assets/1.jpg'),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text("Introduction to Flutter",
-                              style: TextStyle(color: Colors.white)),
-                        ],
-                      ),
-                      SizedBox(width: 30),
-                      Column(
-                        children: [
-                          Container(
-                            width: 100,
-                            child: Image.asset('assets/2.jpg'),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text("Advanced Flutter",
-                              style: TextStyle(color: Colors.white)),
-                        ],
-                      ),
-                      SizedBox(width: 30),
-                      Column(
-                        children: [
-                          Container(
-                            width: 130,
-                            child: Image.asset('assets/3.jpg'),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text("Dart Basics",
-                              style: TextStyle(color: Colors.white)),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Row(
-                  children: [
-                    Text("playlists"),
-                    SizedBox(width: 230),
-                    Icon(Icons.add),
-                    SizedBox(width: 30),
-                    Container(
-                        width: 70,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: Colors.white, // Border color
-                            width: 1.0, // Border width
-                            style: BorderStyle.solid, // Border style
-                          ),
-                        ),
-                        child: Center(child: Text("view all")))
-                  ],
-                )
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              height: 150, // Set a fixed height to avoid vertical overflow
-              child: ListView(
-                scrollDirection: Axis.horizontal, // Enable horizontal scrolling
-                children: [
-                  Column(
-                    children: [
-                      Container(
-                        width: 100,
-                        child: Image.asset('assets/1.jpg'),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("Introduction to Flutter",
-                          style: TextStyle(color: Colors.white)),
-                    ],
-                  ),
-                  SizedBox(width: 30),
-                  Column(
-                    children: [
-                      Container(
-                        width: 100,
-                        child: Image.asset('assets/2.jpg'),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("Advanced Flutter",
-                          style: TextStyle(color: Colors.white)),
-                    ],
-                  ),
-                  SizedBox(width: 30),
-                  Column(
-                    children: [
-                      Container(
-                        width: 130,
-                        child: Image.asset('assets/3.jpg'),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("Dart Basics",
-                          style: TextStyle(color: Colors.white)),
-                    ],
-                  ),
-                  SizedBox(width: 30),
-                  Column(
-                    children: [
-                      Container(
-                        width: 130,
-                        child: Image.asset('assets/4.png'),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("Dart Basics",
-                          style: TextStyle(color: Colors.white)),
-                    ],
-                  ),
-                  SizedBox(width: 30),
-                  Column(
-                    children: [
-                      Container(
-                        width: 130,
-                        child: Image.asset('assets/5.jpg'),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("Dart Basics",
-                          style: TextStyle(color: Colors.white)),
-                    ],
-                  ),
-                ],
               ),
-            ),
-            Expanded(
-              child: ListView(
-                children: [
-                  ListTile(
-                    leading: Icon(Icons.smart_display, color: Colors.white),
-                    title: Text("Your videos",
-                        style: TextStyle(fontSize: 20, color: Colors.white)),
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.download, color: Colors.white),
-                    title: Text("Downloads",
-                        style: TextStyle(fontSize: 20, color: Colors.white)),
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Divider(color: Colors.white, thickness: 1),
-                  ListTile(
-                    leading: Icon(Icons.local_movies, color: Colors.white),
-                    title: Text("Your Movies",
-                        style: TextStyle(fontSize: 20, color: Colors.white)),
-                  ),
-                  Divider(color: Colors.white, thickness: 1),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.insert_chart, color: Colors.white),
-                    title: Text("Time watched",
-                        style: TextStyle(fontSize: 20, color: Colors.white)),
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.help, color: Colors.white),
-                    title: Text("Help & feedback",
-                        style: TextStyle(fontSize: 20, color: Colors.white)),
-                  ),
-                ],
-              ),
+              const SizedBox(height: 25),
+
+              // History Section
+              _buildSectionHeader("History", () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ViewAll()),
+                );
+              }),
+
+              const SizedBox(height: 15),
+              _buildHorizontalListView(),
+              const SizedBox(height: 25),
+
+              // Playlists Section
+              _buildSectionHeader("Playlists", () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ViewAll2()),
+                );
+              }),
+
+              const SizedBox(height: 15),
+              _buildHorizontalListView(),
+              const SizedBox(height: 20),
+
+              // Expanded List
+              _buildOptionsList(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Helper function for section headers with a View All button
+  Widget _buildSectionHeader(String title, VoidCallback onViewAllPressed) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        Row(
+          children: [
+            // Add icon
+            _buildOutlinedButton("View all", onViewAllPressed),
+          ],
+        ),
+      ],
+    );
+  }
+
+  // Helper function for small tags
+  Widget _buildTag(String text, {VoidCallback? onTap, IconData? icon}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.only(right: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 70, 70, 70),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (icon != null) ...[
+              Icon(icon, color: Colors.white, size: 16),
+              const SizedBox(width: 5), // Spacing between icon and text
+            ],
+            Text(
+              text,
+              style: const TextStyle(color: Colors.white),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  // Helper function for outlined buttons with navigation support
+  Widget _buildOutlinedButton(String text, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.white),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Center(
+          child: Text(text,
+              style: const TextStyle(color: Colors.white, fontSize: 12)),
+        ),
+      ),
+    );
+  }
+
+  // Helper function for horizontal scrolling list
+  Widget _buildHorizontalListView() {
+    return SizedBox(
+      height: 120,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: [
+          _buildVideoItem("assets/1.jpg", "Introduction to Flutter"),
+          _buildVideoItem("assets/2.jpg", "Advanced Flutter"),
+          _buildVideoItem("assets/3.jpg", "Dart Basics"),
+          _buildVideoItem("assets/4.png", "More Dart"),
+          _buildVideoItem("assets/5.jpg", "Flutter Widgets"),
+        ],
+      ),
+    );
+  }
+
+  // Helper function for video items in horizontal list
+  Widget _buildVideoItem(String imagePath, String title) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 15),
+      child: Column(
+        children: [
+          SizedBox(
+            width: 140, // Set width
+            height: 80, // Set height
+            child: ClipRRect(
+              borderRadius:
+                  BorderRadius.circular(10), // Optional: Rounded corners
+              child: Image.asset(imagePath, fit: BoxFit.cover),
+            ),
+          ),
+          const SizedBox(height: 10),
+          SizedBox(
+            width: 130, // Ensure the text aligns with the image
+            child: Text(
+              title,
+              style: const TextStyle(color: Colors.white),
+              textAlign: TextAlign.left,
+              overflow: TextOverflow.ellipsis, // Prevent text overflow
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Helper function for the expanded list
+  Widget _buildOptionsList() {
+    return ListView(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      children: [
+        ListTile(
+          leading: const Icon(
+            Icons.smart_display,
+            color: Colors.white,
+            size: 20,
+          ),
+          title: const Text("Your videos",
+              style: TextStyle(fontSize: 15, color: Colors.white)),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => YourVideos()),
+            );
+          },
+        ),
+        ListTile(
+          leading: const Icon(Icons.download, color: Colors.white, size: 20),
+          title: const Text("Downloads",
+              style: TextStyle(fontSize: 15, color: Colors.white)),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Downloads()),
+            );
+          },
+        ),
+        const Divider(color: Colors.white, thickness: 1),
+        ListTile(
+          leading: const Icon(
+            Icons.local_movies,
+            color: Colors.white,
+            size: 20,
+          ),
+          title: const Text("Your Movies",
+              style: TextStyle(fontSize: 15, color: Colors.white)),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => YourMoviess()),
+            );
+          },
+        ),
+        const Divider(color: Colors.white, thickness: 1),
+        ListTile(
+          leading:
+              const Icon(Icons.insert_chart, color: Colors.white, size: 20),
+          title: const Text("Time watched",
+              style: TextStyle(fontSize: 15, color: Colors.white)),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => TimeWatched()),
+            );
+          },
+        ),
+        ListTile(
+          leading: const Icon(Icons.help, color: Colors.white, size: 20),
+          title: const Text("Help & feedback",
+              style: TextStyle(fontSize: 15, color: Colors.white)),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Help_Feedback()),
+            );
+          },
+        ),
+      ],
     );
   }
 }

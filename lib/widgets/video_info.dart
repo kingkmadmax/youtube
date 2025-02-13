@@ -5,6 +5,7 @@ import 'package:youtube/widgets/description_popout.dart';
 import 'package:youtube/api/youtube_api.dart';
 import 'package:youtube/model/comment.dart';
 import 'package:youtube/widgets/comments_popout.dart';
+import 'package:youtube/screens/channel_page.dart';
 
 class VideoInfo extends StatelessWidget {
   final Video video;
@@ -55,8 +56,18 @@ class VideoInfo extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 15),
-           _AuthorInfo(user: video.author),
-             const SizedBox(height: 15),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChannelPage(channelId: video.channelId),
+                ),
+              );
+            },
+            child: _AuthorInfo(user: video.author),
+          ),
+          const SizedBox(height: 15),
           _ActionsRow(video: video),
           const SizedBox(height: 15),
          
@@ -143,52 +154,41 @@ class _AuthorInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => print('Navigate to profile'),
-      child: Row(
-        children: [
-          CircleAvatar(
-            foregroundImage: NetworkImage(user.profileImageUrl),
-          ),
-          const SizedBox(width: 8.0),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Flexible(
-                  child: Text(
-                    user.username,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 16.0, fontWeight: FontWeight.bold,),
-                  ),
+    return Row(
+      children: [
+        CircleAvatar(
+          foregroundImage: NetworkImage(user.profileImageUrl),
+        ),
+        const SizedBox(width: 8.0),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Flexible(
+                child: Text(
+                  user.username,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 16.0, fontWeight: FontWeight.bold,),
                 ),
-                // Flexible(
-                //   child: Text(
-                //     '${user.subscribers} subscribers',
-                //     maxLines: 2,
-                //     overflow: TextOverflow.ellipsis,
-                //     style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14.0),
-                //   ),
-                // ),
-              ],
-            ),
+              ),
+            ],
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
-              color: Colors.white,
-              border: Border.all(color: Colors.grey),
-            ),
-            child: Text(
-              'Subscribe',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.black)
-            ),
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.0),
+            color: Colors.white,
+            border: Border.all(color: Colors.grey),
           ),
-        ],
-      ),
+          child: Text(
+            'Subscribe',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.black)
+          ),
+        ),
+      ],
     );
   }
 }

@@ -11,7 +11,7 @@ class YouTubeAPI {
       'part': 'snippet,contentDetails,statistics',
       'chart': 'mostPopular',
       'regionCode': 'US',
-      'maxResults': 2,
+      'maxResults': 10,
       'key': apiKey,
     });
 
@@ -25,7 +25,7 @@ class YouTubeAPI {
       'part': 'snippet',
       'q': searchTerms,
       'type': 'video',
-      'maxResults': 2,
+      'maxResults': 6,
       'key': apiKey,
     });
 
@@ -37,7 +37,7 @@ class YouTubeAPI {
     final response = await _baseAPI.get('$baseUrl/videoCategories', params: {
       'part': 'snippet',
       'regionCode': 'US',
-      'maxResults': 2,
+      'maxResults': 6,
       'key': apiKey,
     });
 
@@ -51,7 +51,7 @@ class YouTubeAPI {
       'type': 'video',
        'regionCode': 'US',
       'videoCategoryId': categoryId,
-      'maxResults': 2,
+      'maxResults': 6,
       'key': apiKey,
     });
 
@@ -63,7 +63,7 @@ class YouTubeAPI {
     final response = await _baseAPI.get('$baseUrl/channels', params: {
       'part': 'snippet,statistics,brandingSettings',
       'id': channelId,
-      'maxResults': 2,
+      'maxResults': 6,
       'key': apiKey,
     });
 
@@ -76,7 +76,7 @@ class YouTubeAPI {
       'part': 'snippet',
       "order": "date",
       'channelId': channelId,
-      'maxResults': 2,
+      'maxResults': 6,
       'key': apiKey,
     });
 
@@ -88,7 +88,7 @@ class YouTubeAPI {
     final response = await _baseAPI.get('$baseUrl/commentThreads', params: {
       'part': 'snippet',
       'videoId': videoId,
-      'maxResults': 4,
+      'maxResults': 6,
       'key': apiKey,
     });
 

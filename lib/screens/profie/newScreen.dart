@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:youtube/pages/profile.dart';
+import 'package:youtube/screens/profie/profile.dart';
 
 class Newscreen extends StatefulWidget {
   const Newscreen({super.key});

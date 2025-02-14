@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:youtube/pages/profile.dart';
+import 'package:youtube/screens/profie/profile.dart';
 import 'package:youtube/screens/home_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youtube/screens/nav_screen.dart';
-import 'package:youtube/pages/profie_pages/Help_&_feedback.dart';
-import 'package:youtube/screens/shorts_page.dart';
+import 'package:youtube/screens/profie/Help_&_feedback.dart';
+import 'package:youtube/screens/shorts_screen.dart';
 
 void main() {
 runApp(ProviderScope(child: MyApp()));

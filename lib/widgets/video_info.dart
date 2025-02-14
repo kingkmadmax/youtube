@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:youtube/model/data.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:youtube/widgets/description_popout.dart';
+import 'package:youtube/model/user.dart';
+import 'package:youtube/model/video.dart';
+import 'package:youtube/widgets/popups/description_popoup.dart';
 import 'package:youtube/api/youtube_api.dart';
 import 'package:youtube/model/comment.dart';
-import 'package:youtube/widgets/comments_popout.dart';
+import 'package:youtube/widgets/popups/comments_popoup.dart';
 import 'package:youtube/screens/channel_page.dart';
 
 class VideoInfo extends StatelessWidget {

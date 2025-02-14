@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:miniplayer/miniplayer.dart';
-import 'package:youtube/model/data.dart';
-import 'package:youtube/providers/video_provider.dart';
+import 'package:youtube/model/video.dart';
 import 'package:youtube/screens/nav_screen.dart';
+import 'package:youtube/state_management/video_provider.dart';
 import 'package:youtube/widgets/video_card.dart';
 import 'package:youtube/widgets/video_info.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';

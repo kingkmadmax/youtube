@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:youtube/api/youtube_api.dart';
-import 'package:youtube/model/data.dart';
+import 'package:youtube/model/channel.dart';
+import 'package:youtube/model/video.dart';
 import 'package:youtube/widgets/video_card.dart';
 import 'package:timeago/timeago.dart' as timeago;
 

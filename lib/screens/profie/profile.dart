@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:youtube/pages/profie_pages/newScreen.dart';
-import 'package:youtube/pages/profie_pages/view_all.dart';
-import 'package:youtube/pages/profie_pages/view_all2.dart';
-import 'package:youtube/pages/profie_pages/switch_account.dart';
-import 'package:youtube/pages/profie_pages/Help_&_feedback.dart';
-import 'package:youtube/pages/profie_pages/Time_watched.dart';
-import 'package:youtube/pages/profie_pages/your_Movies.dart';
-import 'package:youtube/pages/profie_pages/Downloads.dart';
-import 'package:youtube/pages/profie_pages/Your_videos.dart';
+import 'package:youtube/screens/profie/newScreen.dart';
+import 'package:youtube/screens/profie/view_all.dart';
+import 'package:youtube/screens/profie/view_all2.dart';
+import 'package:youtube/screens/profie/switch_account.dart';
+import 'package:youtube/screens/profie/Help_&_feedback.dart';
+import 'package:youtube/screens/profie/Time_watched.dart';
+import 'package:youtube/screens/profie/your_Movies.dart';
+import 'package:youtube/screens/profie/Downloads.dart';
+import 'package:youtube/screens/profie/Your_videos.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});

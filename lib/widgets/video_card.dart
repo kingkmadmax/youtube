@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:youtube/model/data.dart';
-import 'package:youtube/providers/video_provider.dart';
+import 'package:youtube/model/video.dart';
 import 'package:miniplayer/miniplayer.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:intl/intl.dart';
 import 'package:youtube/screens/channel_page.dart';
+import 'package:youtube/state_management/video_provider.dart';
 
 class VideoCard extends ConsumerWidget {
   final Video video;

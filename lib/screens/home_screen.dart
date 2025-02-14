@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:youtube/api/youtube_api.dart';
-import 'package:youtube/model/data.dart';
+import 'package:youtube/model/category.dart';
+import 'package:youtube/model/video.dart';
 import 'package:youtube/widgets/video_card.dart';
 import 'package:youtube/widgets/widgets.dart';
 import 'package:youtube/widgets/cutom_sliver_app_bar.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:youtube/screens/search_page.dart';
+import 'package:youtube/screens/search_screen.dart';
 class CustomSliverAppBar extends StatelessWidget {
   const CustomSliverAppBar({super.key});
 

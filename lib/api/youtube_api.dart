@@ -1,6 +1,8 @@
 import 'package:youtube/api/base_apis.dart';
+import 'package:youtube/model/category.dart';
+import 'package:youtube/model/channel.dart';
+import 'package:youtube/model/video.dart';
 import 'package:youtube/utils/constants.dart';
-import 'package:youtube/model/data.dart';
 import 'package:youtube/model/comment.dart';
 
 class YouTubeAPI {

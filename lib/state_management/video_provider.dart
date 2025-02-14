@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:miniplayer/miniplayer.dart';
-import 'package:youtube/model/data.dart';
+import 'package:youtube/model/video.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoStateNotifier extends StateNotifier<Video?> {

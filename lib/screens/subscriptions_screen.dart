@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:youtube/widgets/cutom_sliver_app_bar.dart';
 //import 'package:flutter_youtube_ui/widgets/cutom_sliver_app_bar.dart';
-import 'package:youtube/widgets/genre_buttons.dart';
+import 'package:youtube/widgets/buttons/genre_buttons.dart';
 
 import 'all_channels_page.dart'; // Import the new page
 
